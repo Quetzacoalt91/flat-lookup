@@ -21,6 +21,7 @@
 <script>
 export default {
   name: 'Form',
+  props: ['id'],
   data() {
     return {
       form: {
@@ -30,12 +31,26 @@ export default {
   },
   methods: {
     saveFlat() {
-      this.$store.dispatch(
-        'saveFlat', {
-          form: this.form,
-        },
-      );
+      if (undefined !== this.id) {
+        this.$store.dispatch(
+          'editFlat', {
+            id: this.id,
+            form: this.form,
+          },
+        );
+      } else {
+        this.$store.dispatch(
+          'saveFlat', {
+            form: this.form,
+          },
+        );
+      }
     },
+  },
+  mounted() {
+    if (undefined !== this.id) {
+      this.form = this.$store.state.flats[this.id];
+    }
   },
 }
 </script>

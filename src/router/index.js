@@ -1,6 +1,5 @@
 import Router from 'vue-router';
 import Form from '@/components/Form';
-import Links from '@/components/Links';
 import List from '@/components/List';
 
 export default new Router({
@@ -16,9 +15,10 @@ export default new Router({
       component: Form,
     },
     {
-      path: '/links',
-      name: 'Links',
-      component: Links,
+      path: '/edit/:id',
+      name: 'Edit flat',
+      component: Form,
+      props: true,
     },
   ]
 });

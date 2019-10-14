@@ -10,8 +10,8 @@
           <div class="card-body">
             <h5 class="card-title">#{{index}}</h5>
 
-            <a v-if="flat.Link" :href="flat.Link" class="btn btn-primary">Open Ad</a>
-            <a v-if="flat.Link" href="#" class="btn btn-primary">Edit</a>
+            <a v-if="flat.Link" :href="flat.Link">Open Ad</a> |
+            <router-link v-bind:to="'/edit/' + index">Edit</router-link>
           </div>
         </div>
       </div>

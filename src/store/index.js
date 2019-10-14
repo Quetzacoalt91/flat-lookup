@@ -31,11 +31,17 @@ export default {
         state.api.sheetsError = response.body.detail || "Unreachable API";
       });
     },
+    editFlat({ state }, payload) {
+      Vue.http.patch(`${sheetApiUrl}/${payload.id}`, [payload.form]).then(() => {
+      }).catch((response) => {
+        console.error(response);
+        state.api.sheetsError = response.body.detail || "Unreachable API";
+      });
+    },
     saveFlat({ state }, payload) {
       Vue.http.post(sheetApiUrl, [payload.form]).then(() => {
       }).catch((response) => {
-        // eslint-disable-next-line
-        console.log(response);
+        console.error(response);
         state.api.sheetsError = response.body.detail || "Unreachable API";
       });
     },
