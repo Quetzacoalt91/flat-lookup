@@ -13,6 +13,9 @@ export default {
     setFlatsList(state, payload) {
       state.flats = payload.flats;
     },
+    setFlat(state, payload) {
+      state.flats[payload.id] = payload.flat;
+    },
     resetApiError(state, api) {
       state.api[api] = false;
     },
@@ -20,10 +23,10 @@ export default {
   actions: {
     loadFlatsList({ commit, state }) {
       //Avoid API limits
-      commit('setFlatsList', {
+      /*commit('setFlatsList', {
         flats: JSON.parse('[{"Link":"https://www.zoopla.co.uk/to-rent/details/53001378"},{"Link":"g"},{}]'),
       });
-      return;
+      return;*/
       // eslint-disable-next-line
       Vue.http.get(sheetApiUrl).then((response) => {
         commit('setFlatsList', {
@@ -33,8 +36,12 @@ export default {
         state.api.sheetsError = response.body.detail || "Unreachable API";
       });
     },
-    editFlat({ state }, payload) {
-      Vue.http.patch(`${sheetApiUrl}/${payload.id}`, payload.form).then(() => {
+    editFlat({ commit, state }, payload) {
+      Vue.http.patch(`${sheetApiUrl}/${payload.id}`, payload.form).then((response) => {
+        commit('setFlat', {
+          id: payload.id,
+          flat: response.body[0],
+        });
       }).catch((response) => {
         // eslint-disable-next-line
         console.error(response);

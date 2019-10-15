@@ -14,7 +14,12 @@ export default {
   name: 'app',
   components: {
     Alerts,
-  }
+  },
+  created() {
+    if (this.$store.state.flats.length == 0) {
+      this.$store.dispatch('loadFlatsList');
+    }
+  },
 }
 </script>
 

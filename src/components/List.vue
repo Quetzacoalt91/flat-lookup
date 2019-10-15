@@ -10,7 +10,8 @@
           <div class="card-body">
             <h6 class="card-title">#{{index}} - <small>{{ new Date(flat.date_add).toLocaleString('en-GB', { timeZone: 'UTC' }) }}</small></h6>
 
-            <div>£{{flat.price_pcm}}pcm</div>
+            <div v-if="flat.price_pcm">£ {{flat.price_pcm}}pcm</div>
+            <div v-else>£ ---</div>
             <span v-if="flat.Link">
               <a :href="flat.Link" target="_blank">Open Ad</a> |
             </span>
@@ -34,14 +35,6 @@ export default {
   },
   computed: {
     ...mapState(['flats']),
-  },
-  methods: {
-    loadFlats() {
-      this.$store.dispatch('loadFlatsList');
-    },
-  },
-  created() {
-    this.loadFlats();
   },
 }
 </script>
