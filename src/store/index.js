@@ -23,6 +23,7 @@ export default {
         flats: JSON.parse('[{"Link":"https://www.zoopla.co.uk/to-rent/details/53001378"},{"Link":"g"},{}]'),
       });
       return;
+      // eslint-disable-next-line
       Vue.http.get(sheetApiUrl).then((response) => {
         commit('setFlatsList', {
           flats: response.body,
@@ -32,8 +33,9 @@ export default {
       });
     },
     editFlat({ state }, payload) {
-      Vue.http.patch(`${sheetApiUrl}/${payload.id}`, [payload.form]).then(() => {
+      Vue.http.patch(`${sheetApiUrl}/${payload.id}`, payload.form).then(() => {
       }).catch((response) => {
+        // eslint-disable-next-line
         console.error(response);
         state.api.sheetsError = response.body.detail || "Unreachable API";
       });
@@ -41,6 +43,7 @@ export default {
     saveFlat({ state }, payload) {
       Vue.http.post(sheetApiUrl, [payload.form]).then(() => {
       }).catch((response) => {
+        // eslint-disable-next-line
         console.error(response);
         state.api.sheetsError = response.body.detail || "Unreachable API";
       });

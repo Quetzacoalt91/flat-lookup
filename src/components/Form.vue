@@ -22,12 +22,13 @@
 export default {
   name: 'Form',
   props: ['id'],
-  data() {
-    return {
-      form: {
-        Link: '',
-      },
-    }
+  computed: {
+    form() {
+      if (undefined !== this.id) {
+        return this.$store.state.flats[this.id] || this.defaultForm();
+      }
+      return this.defaultForm();
+    },
   },
   methods: {
     saveFlat() {
@@ -46,10 +47,12 @@ export default {
         );
       }
     },
-  },
-  mounted() {
-    if (undefined !== this.id) {
-      this.form = this.$store.state.flats[this.id];
+    defaultForm() {
+      return {
+        form: {
+          Link: '',
+        },
+      };
     }
   },
 }
