@@ -10,7 +10,7 @@
 
 <script>
 export default {
-  name: 'Links',
+  name: 'Liens',
 }
 </script>
 

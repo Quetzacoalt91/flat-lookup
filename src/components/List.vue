@@ -1,16 +1,18 @@
 <template>
   <div class="hello">
-    <h1>Flats list</h1>
+    <h2>Appartements enregistres</h2>
 
     <router-link to="/new">Add new reference</router-link>
 
     <div class="row">
-      <div class="col-sm-3">
-        <div v-for="(flat, index) in flats" v-bind:key="index" class="card">
+      <div class="col-sm-3" v-for="(flat, index) in flats" v-bind:key="index">
+        <div class="card">
           <div class="card-body">
             <h5 class="card-title">#{{index}}</h5>
 
-            <a v-if="flat.Link" :href="flat.Link">Open Ad</a> |
+            <span v-if="flat.Link">
+              <a :href="flat.Link" target="_blank">Open Ad</a> |
+            </span>
             <router-link v-bind:to="'/edit/' + index">Edit</router-link>
           </div>
         </div>
@@ -55,8 +57,5 @@ ul {
 li {
   display: inline-block;
   margin: 0 10px;
-}
-a {
-  color: #42b983;
 }
 </style>

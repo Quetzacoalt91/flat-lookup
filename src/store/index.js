@@ -1,4 +1,5 @@
 import Vue from 'vue';
+import router from '../router';
 import {sheetApiUrl} from './config.json';
 
 export default {
@@ -42,6 +43,7 @@ export default {
     },
     saveFlat({ state }, payload) {
       Vue.http.post(sheetApiUrl, [payload.form]).then(() => {
+        router.push({'path': '/'});
       }).catch((response) => {
         // eslint-disable-next-line
         console.error(response);
