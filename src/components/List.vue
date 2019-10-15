@@ -8,8 +8,9 @@
       <div class="col-sm-3" v-for="(flat, index) in flats" v-bind:key="index">
         <div class="card">
           <div class="card-body">
-            <h5 class="card-title">#{{index}}</h5>
+            <h6 class="card-title">#{{index}} - <small>{{ new Date(flat.date_add).toLocaleString('en-GB', { timeZone: 'UTC' }) }}</small></h6>
 
+            <div>£{{flat.price_pcm}}pcm</div>
             <span v-if="flat.Link">
               <a :href="flat.Link" target="_blank">Open Ad</a> |
             </span>
@@ -57,5 +58,8 @@ ul {
 li {
   display: inline-block;
   margin: 0 10px;
+}
+.card {
+  margin-bottom: 5px;
 }
 </style>
