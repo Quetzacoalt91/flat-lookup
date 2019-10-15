@@ -23,9 +23,15 @@
         </div>
       </div>
       <div class="form-group row">
-        <label for="flatFormType" class="col-sm-2 col-form-label">Code postal</label>
+        <label for="flatPostalCode" class="col-sm-2 col-form-label">Code postal</label>
         <div class="col-sm-10">
-          
+          <input v-model="form.postal_code"  type="text" class="form-control" id="flatPostalCode">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="flatAgency" class="col-sm-2 col-form-label">Agency</label>
+        <div class="col-sm-10">
+          <input v-model="form.agency"  type="text" class="form-control" id="flatAgency">
         </div>
       </div>
       <div class="form-group row">
@@ -128,6 +134,46 @@
         </div>
       </div>
 
+      <h2>Autres infos</h2>
+      <div class="form-group row">
+        <label for="flatPositive" class="col-sm-2 col-form-label">Points positifs</label>
+        <div class="col-sm-10">
+          <textarea v-model="form.Positive" type="text" class="form-control" id="flatPositive"></textarea>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="flatNegative" class="col-sm-2 col-form-label">Contact</label>
+        <div class="col-sm-10">
+          <textarea v-model="form.Negative" type="text" class="form-control" id="flatNegative"></textarea>
+        </div>
+      </div>
+
+      <h2>Visite</h2>
+
+      <div class="form-group row">
+        <label for="visitStatus" class="col-sm-2 col-form-label">Points negatifs</label>
+        <div class="col-sm-10">
+          <select v-model="form.visit_status" id="visitStatus" class="custom-select">
+            <option value="0">Visite non demandee</option>
+            <option value="1">Visite demandee</option>
+            <option value="2">Visite faite</option>
+          </select>
+        </div>
+      </div>
+      <div v-if="0 < form.visit_status" class="form-group row">
+        <label for="visitDate" class="col-sm-2 col-form-label">Date de visite</label>
+        <div class="col-sm-10">
+          <input v-model="form.date_visit" @change="iOsDateFix()" type="datetime-local" class="form-control" id="visitDate">
+        </div>
+      </div>
+
+      <div v-if="0 < form.visit_status" class="form-group row">
+        <label for="visitDate" class="col-sm-2 col-form-label">Contact</label>
+        <div class="col-sm-10">
+          <textarea v-model="form.visit_contact"  type="datetime-local" class="form-control" id="visitDate"></textarea>
+        </div>
+      </div>
+
       <button class="btn btn-primary" type="submit">Save</button>
     </form>
 
@@ -175,7 +221,11 @@ export default {
         price_pcm: 0,
         price_pw: 0,
       };
-    }
+    },
+    iOsDateFix() {
+      // Without this, the form cannot be submitted on iOS
+      this.form.date_visit = this.form.date_visit.substr(0, 16);
+    },
   },
 }
 </script>
