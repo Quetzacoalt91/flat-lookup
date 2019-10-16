@@ -29,6 +29,19 @@ export default {
       return;*/
       // eslint-disable-next-line
       Vue.http.get(sheetApiUrl).then((response) => {
+        response.body.forEach((flat) => {
+          // For each row from the spreadsheet ...
+          Object.keys(flat).forEach(function(key) {
+            // .. replace all occurences of stringified boolean values
+            // in the proper type 
+            if (flat[key] === 'TRUE') {
+              flat[key] = true;
+            }
+            if (flat[key] === 'FALSE') {
+              flat[key] = false;
+            }
+          });
+        });
         commit('setFlatsList', {
           flats: response.body,
         });
