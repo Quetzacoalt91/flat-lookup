@@ -6,7 +6,7 @@
 
     <div class="row">
       <div class="col-sm-3" v-for="(flat, index) in flats" v-bind:key="index">
-        <div class="card">
+        <div class="card" :class="{ 'disabled': !flat.active }">
           <div class="card-body">
             <h6 class="card-title">#{{index}} - <small>{{ new Date(flat.date_add).toLocaleString('en-GB', { timeZone: 'UTC' }) }}</small></h6>
 
@@ -54,5 +54,11 @@ li {
 }
 .card {
   margin-bottom: 5px;
+}
+.disabled {
+  color: grey;
+}
+.disabled a {
+  color: lightblue;
 }
 </style>

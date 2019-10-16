@@ -4,6 +4,13 @@
     <h1>Flat details</h1>
 
     <form @submit="saveFlat">
+      <div v-if="id" class="row">
+        <label for="switchActive" class="col-sm-3 col-form-label">Actif</label>
+        <div class="col-sm-9 custom-control custom-switch">
+          <input v-model="form.active" type="checkbox" class="custom-control-input" id="switchActive">
+          <label class="custom-control-label" for="switchActive"></label>
+        </div>
+      </div>
       <div class="form-group row">
         <label for="flatFormLink" class="col-sm-2 col-form-label">Lien annonce</label>
         <div class="col-sm-10">
