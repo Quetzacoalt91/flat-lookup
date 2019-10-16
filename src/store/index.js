@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import router from '../router';
-import {sheetApiUrl} from './config.json';
+import {sheetApiUrl, imagePreviewUrl} from './config.json';
 
 export default {
   state: {
@@ -21,13 +21,7 @@ export default {
     },
   },
   actions: {
-    loadFlatsList({ commit, state }) {
-      //Avoid API limits
-      /*commit('setFlatsList', {
-        flats: JSON.parse('[{"Link":"https://www.zoopla.co.uk/to-rent/details/53001378"},{"Link":"g"},{}]'),
-      });
-      return;*/
-      // eslint-disable-next-line
+    loadFlatsList({ dispatch, commit, state }) {
       Vue.http.get(sheetApiUrl).then((response) => {
         response.body.forEach((flat) => {
           // For each row from the spreadsheet ...
@@ -45,8 +39,28 @@ export default {
         commit('setFlatsList', {
           flats: response.body,
         });
+        dispatch('getFlatsPreview');
       }).catch((response) => {
-        state.api.sheetsError = response.body.detail || "Unreachable API";
+        if (response.body && response.body.detail) {
+          state.api.sheetsError = response.body.detail;
+        } else {
+          state.api.sheetsError = "Unreachable API";
+        }
+      });
+    },
+    getFlatsPreview({ state }) {
+      state.flats.forEach((flat, index) => {
+        // Do not reload existing images
+        if (undefined === flat.preview_image) {
+          return;
+        }
+        const link = encodeURIComponent(flat.Link);
+        console.log(`${imagePreviewUrl}${link}`);
+        Vue.http.get(`${imagePreviewUrl}${link}`).then((response) => {
+          if (response.body && response.body.length) {
+            state.flats[index].preview_image = response.body;
+          }
+        });
       });
     },
     editFlat({ commit, state }, payload) {
@@ -55,6 +69,7 @@ export default {
           id: payload.id,
           flat: response.body[0],
         });
+        router.push({'path': '/'});
       }).catch((response) => {
         // eslint-disable-next-line
         console.error(response);

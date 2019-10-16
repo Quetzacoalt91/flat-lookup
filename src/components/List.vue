@@ -5,13 +5,16 @@
     <router-link to="/new">Add new reference</router-link>
 
     <div class="row">
-      <div class="col-sm-3" v-for="(flat, index) in flats" v-bind:key="index">
+      <div class="col-sm-4" v-for="(flat, index) in flats" v-bind:key="index">
         <div class="card" :class="{ 'disabled': !flat.active }">
           <div class="card-body">
+            <img :src="flat.preview_image" class="flat-preview float-right" />
             <h6 class="card-title">#{{index}} - <small>{{ new Date(flat.date_add).toLocaleString('en-GB', { timeZone: 'UTC' }) }}</small></h6>
 
             <div v-if="flat.price_pcm">£ {{flat.price_pcm}}pcm</div>
             <div v-else>£ ---</div>
+            
+
             <span v-if="flat.Link">
               <a :href="flat.Link" target="_blank">Open Ad</a> |
             </span>
@@ -60,5 +63,15 @@ li {
 }
 .disabled a {
   color: lightblue;
+}
+.flat-preview {
+  max-width: 100px;
+  max-height: 100px;
+}
+.disabled img {
+  opacity: 0.4;
+}
+.disabled:hover img {
+  opacity: unset;
 }
 </style>
