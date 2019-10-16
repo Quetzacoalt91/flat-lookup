@@ -1,0 +1,13 @@
+version: '2'
+services:
+    app:
+        container_name: flat-lookup
+        build: .
+        networks:
+            - dev_projets
+            - default
+
+networks:
+    dev_projets:
+        external:
+            name: dev_projets
