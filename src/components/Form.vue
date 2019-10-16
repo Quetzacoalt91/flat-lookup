@@ -13,10 +13,13 @@
       </div>
       <div class="form-group row">
         <label for="flatFormLink" class="col-sm-2 col-form-label">Lien annonce</label>
-        <div class="col-sm-10">
+        <div class="col-sm-10 input-group">
           <input v-model="form.Link" type="text" class="form-control"
             id="flatFormLink" placeholder="http://"
           >
+          <div class="input-group-append">
+            <a :href="form.Link" target="_blank" class="btn btn-outline-primary">Open Ad</a>
+          </div>
         </div>
       </div>
 
@@ -239,4 +242,8 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+.flat-preview {
+  max-width: 200px;
+  max-height: 200px;
+}
 </style>
