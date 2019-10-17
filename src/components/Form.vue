@@ -184,7 +184,11 @@
         </div>
       </div>
 
-      <button :disabled="apiBusy" class="btn btn-primary" type="submit">Save</button>
+      <button v-if="!apiBusy" class="btn btn-primary" type="submit">Save</button>
+      <button v-else class="btn btn-primary" type="button" disabled>
+        <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+        Saving...
+      </button>
     </form>
 
   </div>
