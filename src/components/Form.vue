@@ -230,6 +230,7 @@ export default {
         type: '1bedroom',
         price_pcm: 0,
         price_pw: 0,
+        active: true,
       };
     },
     iOsDateFix() {
