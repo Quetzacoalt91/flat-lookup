@@ -78,6 +78,7 @@ export default {
     },
     saveFlat({ state }, payload) {
       Vue.http.post(sheetApiUrl, [payload.form]).then(() => {
+        dispatch('loadFlatsList');
         router.push({'path': '/'});
       }).catch((response) => {
         // eslint-disable-next-line
