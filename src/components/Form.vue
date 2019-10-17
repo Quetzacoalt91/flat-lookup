@@ -181,7 +181,7 @@
       <h2>Visite</h2>
 
       <div class="form-group row">
-        <label for="visitStatus" class="col-sm-2 col-form-label">Points negatifs</label>
+        <label for="visitStatus" class="col-sm-2 col-form-label">Progression</label>
         <div class="col-sm-10">
           <select v-model="form.visit_status" id="visitStatus" class="custom-select">
             <option value="0">Visite non demandee</option>
