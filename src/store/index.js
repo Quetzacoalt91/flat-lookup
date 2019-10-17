@@ -6,6 +6,7 @@ export default {
   state: {
     api: {
       sheetsError: false,
+      sheetsInProgress: false,
     },
     flats: [],
   },
@@ -64,23 +65,29 @@ export default {
       });
     },
     editFlat({ commit, state }, payload) {
+      state.api.sheetsInProgress = true;
       Vue.http.patch(`${sheetApiUrl}/${payload.id}`, payload.form).then((response) => {
+        state.api.sheetsInProgress = false;
         commit('setFlat', {
           id: payload.id,
           flat: response.body[0],
         });
         router.push({'path': '/'});
       }).catch((response) => {
+        state.api.sheetsInProgress = false;
         // eslint-disable-next-line
         console.error(response);
         state.api.sheetsError = response.body.detail || "Unreachable API";
       });
     },
-    saveFlat({ state }, payload) {
+    saveFlat({ dispatch, state }, payload) {
+      state.api.sheetsInProgress = true;
       Vue.http.post(sheetApiUrl, [payload.form]).then(() => {
+        state.api.sheetsInProgress = false;
         dispatch('loadFlatsList');
         router.push({'path': '/'});
       }).catch((response) => {
+        state.api.sheetsInProgress = false;
         // eslint-disable-next-line
         console.error(response);
         state.api.sheetsError = response.body.detail || "Unreachable API";

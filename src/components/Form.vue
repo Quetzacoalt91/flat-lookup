@@ -152,7 +152,7 @@
         </div>
       </div>
       <div class="form-group row">
-        <label for="flatNegative" class="col-sm-2 col-form-label">Contact</label>
+        <label for="flatNegative" class="col-sm-2 col-form-label">Points negatifs</label>
         <div class="col-sm-10">
           <textarea v-model="form.Negative" type="text" class="form-control" id="flatNegative"></textarea>
         </div>
@@ -184,7 +184,7 @@
         </div>
       </div>
 
-      <button class="btn btn-primary" type="submit">Save</button>
+      <button :disabled="apiBusy" class="btn btn-primary" type="submit">Save</button>
     </form>
 
   </div>
@@ -201,6 +201,9 @@ export default {
       }
       return this.defaultForm();
     },
+    apiBusy() {
+      return this.$store.state.api.sheetsInProgress;
+    }
   },
   methods: {
     convertPwToPcm() {
