@@ -1,7 +1,15 @@
 <template>
   <div class="form-rent">
-    <router-link to="/">Back to the list</router-link>
-    <h1>Flat details</h1>
+    <h2>Flat details</h2>
+    
+    <div class="row header-links">
+      <div class="col-md-12">
+        <router-link to="/">
+          <font-awesome-icon icon="arrow-left" />
+          Back to the list
+        </router-link>
+      </div>
+    </div>
 
     <form @submit="saveFlat">
       <div v-if="id" class="row">
@@ -85,6 +93,8 @@
           <label class="custom-control-label" for="switchBillsIncluded" ></label>
         </div>
       </div>
+
+      <SaveButton />
 
       <h2>Chauffage</h2>
       <div class="form-group row">
@@ -184,19 +194,20 @@
         </div>
       </div>
 
-      <button v-if="!apiBusy" class="btn btn-primary" type="submit">Save</button>
-      <button v-else class="btn btn-primary" type="button" disabled>
-        <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
-        Saving...
-      </button>
+      <SaveButton />
     </form>
 
   </div>
 </template>
 
 <script>
+import SaveButton from '@/components/SaveButton';
+
 export default {
   name: 'Form',
+  components: {
+    SaveButton,
+  },
   props: ['id'],
   computed: {
     form() {
@@ -205,9 +216,6 @@ export default {
       }
       return this.defaultForm();
     },
-    apiBusy() {
-      return this.$store.state.api.sheetsInProgress;
-    }
   },
   methods: {
     convertPwToPcm() {

@@ -2,7 +2,14 @@
   <div class="hello">
     <h2>Appartements enregistres</h2>
 
-    <router-link to="/new">Add new reference</router-link>
+    <div class="row header-links">
+      <div class="col-md-12">
+        <router-link to="/new">
+          <font-awesome-icon icon="plus" />
+          Add new reference
+        </router-link>
+      </div>
+    </div>
 
     <div class="row">
       <div class="col-sm-4" v-for="(flat, index) in flats" v-bind:key="index">
