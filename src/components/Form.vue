@@ -219,12 +219,23 @@ export default {
     SaveButton,
   },
   props: ['id'],
+  data() {
+    return {
+      newForm: {
+        type: '1bedroom',
+        price_pcm: 0,
+        price_pw: 0,
+        chauffage_centralise: false,
+        active: true,
+      },
+    };
+  },
   computed: {
     form() {
       if (undefined !== this.id) {
-        return this.$store.state.flats[this.id] || this.defaultForm();
+        return this.$store.state.flats[this.id] || this.newForm;
       }
-      return this.defaultForm();
+      return this.newForm;
     },
   },
   methods: {
@@ -249,14 +260,6 @@ export default {
           },
         );
       }
-    },
-    defaultForm() {
-      return {
-        type: '1bedroom',
-        price_pcm: 0,
-        price_pw: 0,
-        active: true,
-      };
     },
     iOsDateFix() {
       // Without this, the form cannot be submitted on iOS
