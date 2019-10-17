@@ -104,6 +104,16 @@
           <label class="custom-control-label" for="customSwitch1" ></label>
         </div>
       </div>
+      <div v-if="!form.chauffage_centralise" class="form-group row">
+        <label for="chauffageSelect" class="col-sm-2 col-form-label">Type de chauffage</label>
+        <div class="col-sm-10">
+          <select v-model="form.chauffage_type" id="chauffageSelect" class="custom-select">
+            <option disabled>Choisir...</option>
+            <option value="gaz">Gaz</option>
+            <option value="electricite">Electricite</option>
+          </select>
+        </div>
+      </div>
 
       <h2>Rangements</h2>
       <div class="form-group row">
