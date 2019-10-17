@@ -56,7 +56,6 @@ export default {
           return;
         }
         const link = encodeURIComponent(flat.Link);
-        console.log(`${imagePreviewUrl}${link}`);
         Vue.http.get(`${imagePreviewUrl}${link}`).then((response) => {
           if (response.body && response.body.length) {
             state.flats[index].preview_image = response.body;
