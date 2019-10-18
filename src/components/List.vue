@@ -23,9 +23,17 @@
             <img :src="flat.preview_image" class="flat-preview float-right" />
             <h6 class="card-title">#{{index}} - <small>{{ new Date(flat.date_add).toLocaleString('en-GB', { timeZone: 'UTC' }) }}</small></h6>
 
-            <div v-if="flat.price_pcm">£ {{flat.price_pcm}}pcm</div>
-            <div v-else>£ ---</div>
-            
+            <div>
+              <span v-if="flat.price_pcm">£ {{flat.price_pcm}}pcm</span>
+              <span v-else>£ ---</span>
+
+              <span class="status-icons">
+                <font-awesome-icon v-if="flat.visit_status" icon="phone-volume" title="Contact obtenu" />
+                <font-awesome-icon v-if="isVisitDone(flat.date_visit)" icon="calendar-check" title="Visite terminee" class="text-success" />
+                <font-awesome-icon v-else-if="flat.date_visit" icon="calendar-day" title="Visite planifiee" />
+              </span>
+            </div>
+
 
             <span v-if="flat.Link">
               <a :href="flat.Link" target="_blank">Open Ad</a> |
@@ -53,6 +61,16 @@ export default {
       return this.$store.state.api.sheetsInProgress;
     },
     ...mapState(['flats']),
+  },
+  methods: {
+    isVisitDone(dateString) {
+      if (!dateString) {
+        return false;
+      }
+      const date = new Date(dateString);
+      const now = new Date();
+      return now >date;
+    },
   },
 }
 </script>
@@ -91,5 +109,8 @@ li {
 }
 .refresh {
   width: 200px;
+}
+.status-icons svg {
+  margin-left: 10px;
 }
 </style>
