@@ -222,11 +222,12 @@ export default {
   data() {
     return {
       newForm: {
+        active: true,
         type: '1bedroom',
         price_pcm: 0,
         price_pw: 0,
         chauffage_centralise: false,
-        active: true,
+        visit_status: 0,
       },
     };
   },
