@@ -12,6 +12,11 @@
     </div>
 
     <div class="row">
+      <div v-if="apiBusy" class="col-sm-12">
+        <div class="mx-auto refresh">
+          Refreshing <font-awesome-icon icon="circle-notch" spin />
+        </div>
+      </div>
       <div class="col-sm-4" v-for="(flat, index) in flats" v-bind:key="index">
         <div class="card" :class="{ 'disabled': !flat.active }">
           <div class="card-body">
@@ -44,6 +49,9 @@ export default {
     Links,
   },
   computed: {
+    apiBusy() {
+      return this.$store.state.api.sheetsInProgress;
+    },
     ...mapState(['flats']),
   },
 }
@@ -80,5 +88,8 @@ li {
 }
 .disabled:hover img {
   opacity: unset;
+}
+.refresh {
+  width: 200px;
 }
 </style>

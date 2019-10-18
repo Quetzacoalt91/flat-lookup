@@ -6,8 +6,7 @@ import Vuex from 'vuex'
 import router from './router';
 import store from './store';
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faPlus } from '@fortawesome/free-solid-svg-icons'
-import { faArrowLeft } from '@fortawesome/free-solid-svg-icons'
+import { faPlus, faArrowLeft, faCircleNotch } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 import 'bootstrap'
@@ -17,7 +16,7 @@ Vue.use(Vuex)
 Vue.use(VueResource)
 Vue.use(VueRouter)
 
-library.add(faPlus, faArrowLeft)
+library.add(faPlus, faArrowLeft, faCircleNotch)
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 
 Vue.config.productionTip = false

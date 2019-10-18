@@ -23,6 +23,7 @@ export default {
   },
   actions: {
     loadFlatsList({ dispatch, commit, state }) {
+      state.api.sheetsInProgress = true;
       Vue.http.get(sheetApiUrl).then((response) => {
         response.body.forEach((flat) => {
           // For each row from the spreadsheet ...
@@ -40,8 +41,10 @@ export default {
         commit('setFlatsList', {
           flats: response.body,
         });
+        state.api.sheetsInProgress = false;
         dispatch('getFlatsPreview');
       }).catch((response) => {
+        state.api.sheetsInProgress = false;
         if (response.body && response.body.detail) {
           state.api.sheetsError = response.body.detail;
         } else {
