@@ -14,6 +14,7 @@ import {
   faPhoneVolume,
   faCalendarDay,
   faCalendarCheck,
+  faGavel,
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
@@ -30,7 +31,8 @@ library.add(
   faCircleNotch,
   faPhoneVolume,
   faCalendarDay,
-  faCalendarCheck
+  faCalendarCheck,
+  faGavel,
 )
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 Vue.directive('tooltip', function(el, binding){

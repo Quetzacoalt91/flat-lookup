@@ -31,6 +31,7 @@
                 <font-awesome-icon v-if="flat.visit_status" icon="phone-volume" v-tooltip:bottom="'Contact obtenu'" />
                 <font-awesome-icon v-if="dateIsInFuture(flat.date_visit)" icon="calendar-check" v-tooltip:bottom="'Visite terminee: '+ displayDateTime(flat.date_visit)" class="text-success" />
                 <font-awesome-icon v-else-if="flat.date_visit" icon="calendar-day" v-tooltip:bottom="'Visite planifiee: '+ displayDateTime(flat.date_visit)" />
+                <font-awesome-icon v-if="flat.opinion" icon="gavel" :class="opinionColor(flat.opinion)" />
               </span>
             </div>
 
@@ -71,6 +72,15 @@ export default {
       }
       const date = new Date(dateString);
       return date.toLocaleString();
+    },
+    opinionColor(opinion) {
+      if (1 === parseInt(opinion)) {
+        return 'text-danger';
+      }
+      if (2 === parseInt(opinion)) {
+        return 'text-warning';
+      }
+      return 'text-success';
     },
   },
 }
