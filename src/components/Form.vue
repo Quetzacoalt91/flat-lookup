@@ -12,13 +12,8 @@
     </div>
 
     <form @submit="saveFlat">
-      <div v-if="id" class="row">
-        <label for="switchActive" class="col-sm-3 col-form-label">Actif</label>
-        <div class="col-sm-9 custom-control custom-switch">
-          <input v-model="form.active" type="checkbox" class="custom-control-input" id="switchActive">
-          <label class="custom-control-label" for="switchActive"></label>
-        </div>
-      </div>
+      <SwitchSingle  v-if="id" v-model="form.active" label="Actif" />
+
       <div class="form-group row">
         <label for="flatFormLink" class="col-sm-2 col-form-label">Lien annonce</label>
         <div class="col-sm-10 input-group">
@@ -79,31 +74,15 @@
           </div>
         </div>
       </div>
-      <div class="form-group row">
-        <label for="switchFurnished" class="col-sm-3 col-form-label">Meublé</label>
-        <div class="col-sm-9 custom-control custom-switch">
-          <input v-model="form.furnished" type="checkbox" class="custom-control-input" id="switchFurnished">
-          <label class="custom-control-label" for="switchFurnished" ></label>
-        </div>
-      </div>
-      <div class="form-group row">
-        <label for="switchBillsIncluded" class="col-sm-3 col-form-label">Charges incluses</label>
-        <div class="col-sm-9 custom-control custom-switch">
-          <input v-model="form.bills_included" type="checkbox" class="custom-control-input" id="switchBillsIncluded">
-          <label class="custom-control-label" for="switchBillsIncluded" ></label>
-        </div>
-      </div>
+
+      <SwitchSingle v-model="form.furnished" label="Meublé" />
+      <SwitchSingle v-model="form.bills_included" label="Charges incluses" />
 
       <SaveButton />
 
       <h2>Chauffage</h2>
-      <div class="form-group row">
-        <label for="customSwitch1" class="col-sm-3 col-form-label">Chauffage centralise</label>
-        <div class="col-sm-9 custom-control custom-switch">
-          <input v-model="form.chauffage_centralise" type="checkbox" class="custom-control-input" id="customSwitch1">
-          <label class="custom-control-label" for="customSwitch1" ></label>
-        </div>
-      </div>
+      <SwitchSingle v-model="form.chauffage_centralise" label="Chauffage centralisé" />
+
       <div v-if="!form.chauffage_centralise" class="form-group row">
         <label for="chauffageSelect" class="col-sm-2 col-form-label">Type de chauffage</label>
         <div class="col-sm-10">
@@ -116,20 +95,8 @@
       </div>
 
       <h2>Rangements</h2>
-      <div class="form-group row">
-        <label for="switchStorageEnough" class="col-sm-3 col-form-label">Espaces de rangement suffisants</label>
-        <div class="col-sm-9 custom-control custom-switch">
-          <input v-model="form.storage_enough" type="checkbox" class="custom-control-input" id="switchStorageEnough">
-          <label class="custom-control-label" for="switchStorageEnough" ></label>
-        </div>
-      </div>
-      <div class="row">
-        <label for="switchStoragePossible" class="col-sm-3 col-form-label">Espace dispo pour rangements</label>
-        <div class="col-sm-9 custom-control custom-switch">
-          <input v-model="form.storage_possible" type="checkbox" class="custom-control-input" id="switchStoragePossible">
-          <label class="custom-control-label" for="switchStoragePossible"></label>
-        </div>
-      </div>
+      <SwitchSingle v-model="form.storage_enough" label="Espaces de rangement suffisants" />
+      <SwitchSingle v-model="form.storage_possible" label="Espace dispo pour rangements" />
 
       <h2>Confort</h2>
       <div class="row">
@@ -150,7 +117,7 @@
         </div>
       </div>
 
-      <div class="row">
+      <div class="row separator">
         <label class="col-sm-3 col-form-label">Dans l'immeuble</label>
         <div class="col-sm-9">
           <div class="custom-control custom-switch">
@@ -160,6 +127,18 @@
           <div class="custom-control custom-switch">
             <input v-model="form.ci_gym" type="checkbox" class="custom-control-input" id="switchImmeubleGym">
             <label class="custom-control-label" for="switchImmeubleGym">Salle de sport</label>
+          </div>
+          <div class="custom-control custom-switch">
+            <input v-model="form.ci_entree_secure" type="checkbox" class="custom-control-input" id="switchEntreeSecure">
+            <label class="custom-control-label" for="switchEntreeSecure">Entree securisee</label>
+          </div>
+          <div class="custom-control custom-switch">
+            <input v-model="form.ci_concierge" type="checkbox" class="custom-control-input" id="switchConcierge">
+            <label class="custom-control-label" for="switchConcierge">Concierge</label>
+          </div>
+          <div class="custom-control custom-switch">
+            <input v-model="form.ci_jardin" type="checkbox" class="custom-control-input" id="switchJardin">
+            <label class="custom-control-label" for="switchJardin">Jardin / Parc</label>
           </div>
         </div>
       </div>
@@ -212,11 +191,13 @@
 
 <script>
 import SaveButton from '@/components/SaveButton';
+import SwitchSingle from '@/components/SwitchSingle';
 
 export default {
   name: 'Form',
   components: {
     SaveButton,
+    SwitchSingle,
   },
   props: ['id'],
   data() {
@@ -275,5 +256,8 @@ export default {
 .flat-preview {
   max-width: 200px;
   max-height: 200px;
+}
+.separator {
+  margin-top: 10px;
 }
 </style>
