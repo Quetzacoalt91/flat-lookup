@@ -20,7 +20,7 @@
           <input v-model="form.Link" type="text" class="form-control"
             id="flatFormLink" placeholder="http://"
           >
-          <div class="input-group-append">
+          <div v-if="googleMapsLink" class="input-group-append">
             <a :href="form.Link" target="_blank" class="btn btn-outline-primary">Open Ad</a>
           </div>
         </div>
@@ -37,8 +37,11 @@
       </div>
       <div class="form-group row">
         <label for="flatPostalCode" class="col-sm-2 col-form-label">Code postal</label>
-        <div class="col-sm-10">
-          <input v-model="form.postal_code"  type="text" class="form-control" id="flatPostalCode">
+        <div class="col-sm-10 input-group">
+          <input v-model="form.postal_code" type="text" class="form-control" id="flatPostalCode">
+          <div class="input-group-append">
+            <a :href="googleMapsLink" target="_blank" class="btn btn-outline-primary">Open map</a>
+          </div>
         </div>
       </div>
       <div class="form-group row">
@@ -231,6 +234,13 @@ export default {
         return this.$store.state.flats[this.id] || this.newForm;
       }
       return this.newForm;
+    },
+    googleMapsLink() {
+      if (undefined === this.form.postal_code) {
+        return false;
+      }
+      const query = this.form.postal_code.replace(/ /g, '+');
+      return `http://maps.google.com/?q=${query}`;
     },
   },
   methods: {
