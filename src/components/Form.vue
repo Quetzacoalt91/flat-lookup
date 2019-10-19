@@ -40,7 +40,7 @@
         <div class="col-sm-10 input-group">
           <input v-model="form.postal_code" type="text" class="form-control" id="flatPostalCode">
           <div class="input-group-append">
-            <a :href="googleMapsLink" target="_blank" class="btn btn-outline-primary">Open map</a>
+            <a :href="googleMapsLink(form.postal_code)" target="_blank" class="btn btn-outline-primary">Open map</a>
           </div>
         </div>
       </div>
@@ -207,7 +207,7 @@
 <script>
 import SaveButton from '@/components/SaveButton';
 import SwitchSingle from '@/components/SwitchSingle';
-import { dateIsInFuture } from '../common/methods';
+import { dateIsInFuture, googleMapsLink } from '../common/methods';
 
 export default {
   name: 'Form',
@@ -235,16 +235,10 @@ export default {
       }
       return this.newForm;
     },
-    googleMapsLink() {
-      if (undefined === this.form.postal_code) {
-        return false;
-      }
-      const query = this.form.postal_code.replace(/ /g, '+');
-      return `http://maps.google.com/?q=${query}`;
-    },
   },
   methods: {
     dateIsInFuture,
+    googleMapsLink,
     convertPwToPcm() {
       this.form.price_pcm = parseInt(parseInt(this.form.price_pw) * 52 / 12);
     },

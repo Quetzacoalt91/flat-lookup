@@ -39,6 +39,11 @@
             <span v-if="flat.Link">
               <a :href="flat.Link" target="_blank">Open Ad</a> |
             </span>
+            <span v-if="flat.postal_code">
+              <a :href="googleMapsLink(flat.postal_code)" target="_blank">
+                <font-awesome-icon icon="map-marked-alt" />
+              </a> |
+            </span>
             <router-link v-bind:to="'/edit/' + index">Edit</router-link>
           </div>
         </div>
@@ -51,7 +56,7 @@
 <script>
 import { mapState } from 'vuex';
 import Links from '@/components/Links';
-import { dateIsInFuture } from '../common/methods';
+import { dateIsInFuture, googleMapsLink } from '../common/methods';
 
 export default {
   name: 'List',
@@ -66,6 +71,7 @@ export default {
   },
   methods: {
     dateIsInFuture,
+    googleMapsLink,
     displayDateTime(dateString) {
       if (!dateString) {
         return false;
