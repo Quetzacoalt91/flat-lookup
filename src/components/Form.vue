@@ -165,21 +165,33 @@
           <select v-model="form.visit_status" id="visitStatus" class="custom-select">
             <option value="0">Visite non demandee</option>
             <option value="1">Visite demandee</option>
-            <option value="2">Visite faite</option>
           </select>
         </div>
       </div>
-      <div v-if="0 < form.visit_status" class="form-group row">
-        <label for="visitDate" class="col-sm-2 col-form-label">Date de visite</label>
-        <div class="col-sm-10">
-          <input v-model="form.date_visit" @change="iOsDateFix()" type="datetime-local" class="form-control" id="visitDate">
+      <div v-if="0 < form.visit_status">
+        <div class="form-group row">
+          <label for="visitDate" class="col-sm-2 col-form-label">Date de visite</label>
+          <div class="col-sm-10">
+            <input v-model="form.date_visit" @change="iOsDateFix()" type="datetime-local" class="form-control" id="visitDate">
+          </div>
         </div>
-      </div>
 
-      <div v-if="0 < form.visit_status" class="form-group row">
-        <label for="visitDate" class="col-sm-2 col-form-label">Contact</label>
-        <div class="col-sm-10">
-          <textarea v-model="form.visit_contact"  type="datetime-local" class="form-control" id="visitDate"></textarea>
+        <div class="form-group row">
+          <label for="visitDate" class="col-sm-2 col-form-label">Contact</label>
+          <div class="col-sm-10">
+            <textarea v-model="form.visit_contact"  type="datetime-local" class="form-control" id="visitDate"></textarea>
+          </div>
+        </div>
+
+        <div v-if="dateIsInFuture(form.date_visit)" class="form-group row">
+          <label for="visitOpinion" class="col-sm-2 col-form-label">Avis final</label>
+          <div class="col-sm-10">
+            <select v-model="form.opinion" id="visitOpinion" class="custom-select">
+              <option value="0">NOPE</option>
+              <option value="1">Meh</option>
+              <option value="2">Valide</option>
+            </select>
+          </div>
         </div>
       </div>
 
@@ -192,6 +204,7 @@
 <script>
 import SaveButton from '@/components/SaveButton';
 import SwitchSingle from '@/components/SwitchSingle';
+import { dateIsInFuture } from '../common/methods';
 
 export default {
   name: 'Form',
@@ -221,6 +234,7 @@ export default {
     },
   },
   methods: {
+    dateIsInFuture,
     convertPwToPcm() {
       this.form.price_pcm = parseInt(parseInt(this.form.price_pw) * 52 / 12);
     },
