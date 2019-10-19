@@ -187,9 +187,9 @@
           <label for="visitOpinion" class="col-sm-2 col-form-label">Avis final</label>
           <div class="col-sm-10">
             <select v-model="form.opinion" id="visitOpinion" class="custom-select">
-              <option value="0">NOPE</option>
-              <option value="1">Meh</option>
-              <option value="2">Valide</option>
+              <option value="1">NOPE</option>
+              <option value="2">Meh</option>
+              <option value="3">Valide</option>
             </select>
           </div>
         </div>
