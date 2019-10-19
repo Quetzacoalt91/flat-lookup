@@ -5,6 +5,7 @@ import VueRouter from 'vue-router'
 import Vuex from 'vuex'
 import router from './router';
 import store from './store';
+import $ from 'jquery';
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { 
   faPlus,
@@ -32,6 +33,13 @@ library.add(
   faCalendarCheck
 )
 Vue.component('font-awesome-icon', FontAwesomeIcon)
+Vue.directive('tooltip', function(el, binding){
+  $(el).tooltip({
+           title: binding.value,
+           placement: binding.arg,
+           trigger: 'hover'             
+       })
+})
 
 Vue.config.productionTip = false
 

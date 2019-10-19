@@ -28,9 +28,9 @@
               <span v-else>£ ---</span>
 
               <span class="status-icons">
-                <font-awesome-icon v-if="flat.visit_status" icon="phone-volume" title="Contact obtenu" />
-                <font-awesome-icon v-if="isVisitDone(flat.date_visit)" icon="calendar-check" title="Visite terminee" class="text-success" />
-                <font-awesome-icon v-else-if="flat.date_visit" icon="calendar-day" title="Visite planifiee" />
+                <font-awesome-icon v-if="flat.visit_status" icon="phone-volume" v-tooltip:bottom="'Contact obtenu'" />
+                <font-awesome-icon v-if="isVisitDone(flat.date_visit)" icon="calendar-check" v-tooltip:bottom="'Visite terminee: '+ displayDateTime(flat.date_visit)" class="text-success" />
+                <font-awesome-icon v-else-if="flat.date_visit" icon="calendar-day" v-tooltip:bottom="'Visite planifiee: '+ displayDateTime(flat.date_visit)" />
               </span>
             </div>
 
@@ -69,7 +69,14 @@ export default {
       }
       const date = new Date(dateString);
       const now = new Date();
-      return now >date;
+      return now > date;
+    },
+    displayDateTime(dateString) {
+      if (!dateString) {
+        return false;
+      }
+      const date = new Date(dateString);
+      return date.toLocaleString();
     },
   },
 }
