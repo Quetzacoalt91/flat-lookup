@@ -21,7 +21,7 @@
         <div class="card" :class="{ 'disabled': !flat.active }">
           <div class="card-body">
             <img :src="flat.preview_image" class="flat-preview float-right" />
-            <h6 class="card-title">#{{index}} - <small>{{ new Date(flat.date_add).toLocaleString('en-GB', { timeZone: 'UTC' }) }}</small></h6>
+            <h6 class="card-title">#{{ idFromReversedList(index) }} - <small>{{ new Date(flat.date_add).toLocaleString('en-GB', { timeZone: 'UTC' }) }}</small></h6>
 
             <div>
               <span v-if="flat.price_pcm">£ {{flat.price_pcm}}pcm</span>
@@ -44,7 +44,7 @@
                 <font-awesome-icon icon="map-marked-alt" />
               </a> |
             </span>
-            <router-link v-bind:to="'/edit/' + index">Edit</router-link>
+            <router-link v-bind:to="'/edit/' + idFromReversedList(index)">Edit</router-link>
           </div>
         </div>
       </div>
@@ -67,7 +67,12 @@ export default {
     apiBusy() {
       return this.$store.state.api.sheetsInProgress;
     },
-    ...mapState(['flats']),
+    listLength() {
+      return this.$store.state.flats.length;
+    },
+    flats() {
+      return this.$store.state.flats.slice().reverse();
+    },
   },
   methods: {
     dateIsInFuture,
@@ -88,6 +93,9 @@ export default {
       }
       return 'text-success';
     },
+    idFromReversedList(index) {
+      return this.listLength - 1 - index;
+    }
   },
 }
 </script>
