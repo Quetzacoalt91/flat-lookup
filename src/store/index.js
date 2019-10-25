@@ -26,39 +26,43 @@ export default {
       const flats = [];
       state.api.sheetsInProgress = true;
       sheetApiUrls.forEach((url, urlKey) => {
-        Vue.http.get(url).then((response) => {
-          response.body.forEach((flat, flatKey) => {
-            // For each row from the spreadsheet ...
-            Object.keys(flat).forEach(function(key) {
-              // .. replace all occurences of stringified boolean values
-              // in the proper type 
-              if (flat[key] === 'TRUE') {
-                flat[key] = true;
-              }
-              if (flat[key] === 'FALSE') {
-                flat[key] = false;
-              }
+        const functionCall = () => {
+          Vue.http.get(url).then((response) => {
+            response.body.forEach((flat, flatKey) => {
+              // For each row from the spreadsheet ...
+              Object.keys(flat).forEach(function(key) {
+                // .. replace all occurences of stringified boolean values
+                // in the proper type 
+                if (flat[key] === 'TRUE') {
+                  flat[key] = true;
+                }
+                if (flat[key] === 'FALSE') {
+                  flat[key] = false;
+                }
+              });
+              flats[flatKey] = Object.assign({}, flats[flatKey] || {}, flat);
             });
-            flats[flatKey] = Object.assign({}, flats[flatKey] || {}, flat);
-          });
-          if (0 === urlKey) {
-            dispatch('getFlatsPreview');
-          }
-          // If the API call was the last one to do
-          if (urlKey === (sheetApiUrls.length - 1)) {
-            commit('setFlatsList', {
-              flats: flats,
-            });
+            if (0 === urlKey) {
+              dispatch('getFlatsPreview');
+            }
+            // If the API call was the last one to do
+            if (urlKey === (sheetApiUrls.length - 1)) {
+              commit('setFlatsList', {
+                flats: flats,
+              });
+              state.api.sheetsInProgress = false;
+            }
+          }).catch((response) => {
             state.api.sheetsInProgress = false;
-          }
-        }).catch((response) => {
-          state.api.sheetsInProgress = false;
-          if (response.body && response.body.detail) {
-            state.api.sheetsError = response.body.detail;
-          } else {
-            state.api.sheetsError = response || "Unreachable API";
-          }
-        });
+            if (response.body && response.body.detail) {
+              state.api.sheetsError = response.body.detail;
+            } else {
+              state.api.sheetsError = response || "Unreachable API";
+            }
+          });
+        };
+        setTimeout(functionCall, (urlKey * 500));
+
       });
     },
     getFlatsPreview({ state }) {
