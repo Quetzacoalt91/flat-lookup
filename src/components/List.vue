@@ -3,13 +3,13 @@
     <h2>Appartements enregistres</h2>
 
     <div class="row header-links">
-      <div class="col">
+      <div class="col-12 col-sm-6">
         <router-link to="/new">
           <font-awesome-icon icon="plus" />
           Add new reference
         </router-link>
       </div>
-      <div class="col text-right">
+      <div class="col-12 col-sm-6 text-right">
         <SwitchSingle
           v-model="displayDisabledAds"
           label="Afficher les annonces désactivées"
