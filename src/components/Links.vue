@@ -14,6 +14,11 @@
           Community Map
         </a>
       </li>
+      <li>
+        <a href="https://www.gov.uk/government/collections/private-rental-market-statistics">
+          Market statistics (gov.uk)
+        </a>
+      </li>
     </ul>
   </div>
 </template>
