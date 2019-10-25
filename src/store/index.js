@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import router from '../router';
-import {sheetApiUrls, imagePreviewUrl} from './config.json';
+import {sheetApiUrl, imagePreviewUrl} from './config.json';
 
 export default {
   state: {
@@ -23,42 +23,33 @@ export default {
   },
   actions: {
     loadFlatsList({ dispatch, commit, state }) {
-      const flats = [];
       state.api.sheetsInProgress = true;
-      sheetApiUrls.forEach((url, urlKey) => {
-        Vue.http.get(url).then((response) => {
-          response.body.forEach((flat, flatKey) => {
-            // For each row from the spreadsheet ...
-            Object.keys(flat).forEach(function(key) {
-              // .. replace all occurences of stringified boolean values
-              // in the proper type 
-              if (flat[key] === 'TRUE') {
-                flat[key] = true;
-              }
-              if (flat[key] === 'FALSE') {
-                flat[key] = false;
-              }
-            });
-            flats[flatKey] = Object.assign({}, flats[flatKey] || {}, flat);
+      Vue.http.get(sheetApiUrl).then((response) => {
+        response.body.forEach((flat) => {
+          // For each row from the spreadsheet ...
+          Object.keys(flat).forEach(function(key) {
+            // .. replace all occurences of stringified boolean values
+            // in the proper type 
+            if (flat[key] === 'TRUE') {
+              flat[key] = true;
+            }
+            if (flat[key] === 'FALSE') {
+              flat[key] = false;
+            }
           });
-          if (0 === urlKey) {
-            dispatch('getFlatsPreview');
-          }
-          // If the API call was the last one to do
-          if (urlKey === (sheetApiUrls.length - 1)) {
-            commit('setFlatsList', {
-              flats: flats,
-            });
-            state.api.sheetsInProgress = false;
-          }
-        }).catch((response) => {
-          state.api.sheetsInProgress = false;
-          if (response.body && response.body.detail) {
-            state.api.sheetsError = response.body.detail;
-          } else {
-            state.api.sheetsError = response || "Unreachable API";
-          }
         });
+        commit('setFlatsList', {
+          flats: response.body,
+        });
+        state.api.sheetsInProgress = false;
+        dispatch('getFlatsPreview');
+      }).catch((response) => {
+        state.api.sheetsInProgress = false;
+        if (response.body && response.body.detail) {
+          state.api.sheetsError = response.body.detail;
+        } else {
+          state.api.sheetsError = "Unreachable API";
+        }
       });
     },
     getFlatsPreview({ state }) {
@@ -76,45 +67,32 @@ export default {
       });
     },
     editFlat({ commit, state }, payload) {
-      const flatResponse = {};
       state.api.sheetsInProgress = true;
-      sheetApiUrls.forEach((url, urlKey) => {
-        Vue.http.patch(`${url}/${payload.id}`, payload.form).then((response) => {
-          Object.assign(flatResponse, response.body[0]);
-          
-          // If the API call was the last one to do
-          if (urlKey === (sheetApiUrls.length - 1)) {
-            state.api.sheetsInProgress = false;
-            commit('setFlat', {
-              id: payload.id,
-              flat: flatResponse,
-            });
-            router.push({'path': '/'});
-          }
-        }).catch((response) => {
-          state.api.sheetsInProgress = false;
-          // eslint-disable-next-line
-          console.error(response);
-          state.api.sheetsError = response.body.detail || "Unreachable API";
+      Vue.http.patch(`${sheetApiUrl}/${payload.id}`, payload.form).then((response) => {
+        state.api.sheetsInProgress = false;
+        commit('setFlat', {
+          id: payload.id,
+          flat: response.body[0],
         });
+        router.push({'path': '/'});
+      }).catch((response) => {
+        state.api.sheetsInProgress = false;
+        // eslint-disable-next-line
+        console.error(response);
+        state.api.sheetsError = response.body.detail || "Unreachable API";
       });
     },
     saveFlat({ dispatch, state }, payload) {
       state.api.sheetsInProgress = true;
-      sheetApiUrls.forEach((url, urlKey) => {
-        Vue.http.post(url, [payload.form]).then(() => {
-          // If the API call was the last one to do
-          if (urlKey === (sheetApiUrls.length - 1)) {
-            state.api.sheetsInProgress = false;
-            dispatch('loadFlatsList');
-            router.push({'path': '/'});
-          }
-        }).catch((response) => {
-          state.api.sheetsInProgress = false;
-          // eslint-disable-next-line
-          console.error(response);
-          state.api.sheetsError = response.body.detail || "Unreachable API";
-        });
+      Vue.http.post(sheetApiUrl, [payload.form]).then(() => {
+        state.api.sheetsInProgress = false;
+        dispatch('loadFlatsList');
+        router.push({'path': '/'});
+      }).catch((response) => {
+        state.api.sheetsInProgress = false;
+        // eslint-disable-next-line
+        console.error(response);
+        state.api.sheetsError = response.body.detail || "Unreachable API";
       });
     },
   },
