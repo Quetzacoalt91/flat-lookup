@@ -1,7 +1,7 @@
 <template>
   <div class="form-group row">
-    <label :for="idSwitch" class="col-sm-3 col-9 col-form-label">{{ label }}</label>
-    <div class="col-sm-9 col-1 custom-control custom-switch">
+    <label :for="idSwitch" :class="classLabel || 'col-sm-3 col-9 col-form-label'">{{ label }}</label>
+    <div :class="classSwitch || 'col-sm-9 col-1 custom-control custom-switch'">
       <input
         v-model="value"
         v-on:input="$emit('input', $event.target.checked)"
@@ -20,6 +20,8 @@ export default {
   props: [
     'label',
     'value',
+    'classLabel',
+    'classSwitch',
   ],
   computed: {
     idSwitch() {

@@ -3,11 +3,19 @@
     <h2>Appartements enregistres</h2>
 
     <div class="row header-links">
-      <div class="col-md-12">
+      <div class="col">
         <router-link to="/new">
           <font-awesome-icon icon="plus" />
           Add new reference
         </router-link>
+      </div>
+      <div class="col text-right">
+        <SwitchSingle
+          v-model="displayDisabledAds"
+          label="Afficher les annonces désactivées"
+          classLabel="col-9 col-form-label"
+          classSwitch="col-1 custom-control custom-switch"
+        />
       </div>
     </div>
 
@@ -17,7 +25,7 @@
           Refreshing <font-awesome-icon icon="circle-notch" spin />
         </div>
       </div>
-      <div class="col-sm-4" v-for="(flat, index) in flats" v-bind:key="index">
+      <div class="col-sm-4" v-for="(flat, index) in flats" v-bind:key="index" :class="{ 'd-none': !displayDisabledAds && !flat.active }">
         <div class="card" :class="{ 'disabled': !flat.active }">
           <div class="card-body">
             <img :src="flat.preview_image" class="flat-preview float-right" />
@@ -56,12 +64,20 @@
 <script>
 import { mapState } from 'vuex';
 import Links from '@/components/Links';
+import SwitchSingle from '@/components/SwitchSingle';
 import { dateIsInFuture, googleMapsLink } from '../common/methods';
 
 export default {
   name: 'List',
   components: {
     Links,
+    SwitchSingle,
+  },
+  props: {
+    displayDisabledAds: {
+      type: Boolean,
+      default: false,
+    },
   },
   computed: {
     apiBusy() {
