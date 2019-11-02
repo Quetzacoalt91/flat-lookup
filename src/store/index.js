@@ -55,7 +55,7 @@ export default {
     getFlatsPreview({ state }) {
       state.flats.forEach((flat, index) => {
         // Do not reload existing images
-        if (undefined === flat.preview_image) {
+        if (flat.hasOwnProperty('preview_image') && undefined === flat.preview_image) {
           return;
         }
         const link = encodeURIComponent(flat.Link);
