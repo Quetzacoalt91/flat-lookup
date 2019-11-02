@@ -28,7 +28,9 @@
       <div class="col-sm-4" v-for="(flat, index) in flats" v-bind:key="index" :class="{ 'd-none': !displayDisabledAds && !flat.active }">
         <div class="card" :class="{ 'disabled': !flat.active }">
           <div class="card-body">
-            <img :src="flat.preview_image" class="flat-preview float-right" />
+            <a :href="flat.Link" target="_blank">
+              <img :src="flat.preview_image" class="flat-preview float-right" />
+            </a>
             <h6 class="card-title">#{{ idFromReversedList(index) }} - <small>{{ new Date(flat.date_add).toLocaleString('en-GB', { timeZone: 'UTC' }) }}</small></h6>
 
             <div>
