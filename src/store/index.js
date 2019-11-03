@@ -37,6 +37,8 @@ export default {
               flat[key] = false;
             }
           });
+          // Enable computed attr
+          flat.preview_image = undefined;
         });
         commit('setFlatsList', {
           flats: response.body,
@@ -55,7 +57,10 @@ export default {
     getFlatsPreview({ state }) {
       state.flats.forEach((flat, index) => {
         // Do not reload existing images
-        if (flat.hasOwnProperty('preview_image') && undefined === flat.preview_image) {
+        if ((flat.hasOwnProperty('preview_image')
+          && undefined !== flat.preview_image)
+          || !flat.Link.length
+        ) {
           return;
         }
         const link = encodeURIComponent(flat.Link);
