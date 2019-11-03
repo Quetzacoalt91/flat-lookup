@@ -64,7 +64,6 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
 import Links from '@/components/Links';
 import SwitchSingle from '@/components/SwitchSingle';
 import { dateIsInFuture, googleMapsLink } from '../common/methods';
