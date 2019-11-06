@@ -19,6 +19,21 @@
           Market statistics (gov.uk)
         </a>
       </li>
+      <li>
+        Council Tax
+      </li>
+      <ul>
+        <li>
+          <a href="http://cti.voa.gov.uk/cti/InitS.asp?lcn=0">
+            Get Council Tax Band
+          </a>
+        </li>
+        <li>
+          <a href="https://www.which.co.uk/money/tax/council-tax/council-tax-calculator-2018-ag9ch3j076bw#headline_1">
+            Council Tax Calculator (2019)
+          </a>
+        </li>
+      </ul>
     </ul>
   </div>
 </template>
