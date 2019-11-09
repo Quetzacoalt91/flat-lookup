@@ -18,9 +18,9 @@
         <label for="flatFormLink" class="col-sm-2 col-form-label">Lien annonce</label>
         <div class="col-sm-10 input-group">
           <input v-model="form.Link" type="text" class="form-control"
-            id="flatFormLink" placeholder="http://"
+            id="flatFormLink" placeholder="URL"
           >
-          <div v-if="googleMapsLink" class="input-group-append">
+          <div v-if="form.Link" class="input-group-append">
             <a :href="form.Link" target="_blank" class="btn btn-outline-primary">Open Ad</a>
           </div>
         </div>
@@ -39,7 +39,7 @@
         <label for="flatPostalCode" class="col-sm-2 col-form-label">Code postal</label>
         <div class="col-sm-10 input-group">
           <input v-model="form.postal_code" type="text" class="form-control" id="flatPostalCode">
-          <div class="input-group-append">
+          <div v-if="form.postal_code" class="input-group-append">
             <a :href="googleMapsLink(form.postal_code)" target="_blank" class="btn btn-outline-primary">Open map</a>
           </div>
         </div>

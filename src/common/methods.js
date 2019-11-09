@@ -8,7 +8,7 @@ export function dateIsInFuture(dateString) {
 };
 
 export function googleMapsLink(postal_code) {
-  if (undefined === postal_code) {
+  if (undefined === postal_code || !postal_code.length) {
     return false;
   }
   const query = postal_code.replace(/ /g, '+');
