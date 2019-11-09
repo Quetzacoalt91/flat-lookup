@@ -135,6 +135,7 @@ li {
 }
 .disabled {
   color: grey;
+  background-color: #f2f2f2;
 }
 .disabled a {
   color: lightblue;
