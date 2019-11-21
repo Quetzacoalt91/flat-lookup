@@ -16,6 +16,7 @@ import {
   faCalendarCheck,
   faGavel,
   faMapMarkedAlt,
+  faSync,
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
@@ -35,6 +36,7 @@ library.add(
   faCalendarCheck,
   faGavel,
   faMapMarkedAlt,
+  faSync,
 )
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 Vue.directive('tooltip', function(el, binding){

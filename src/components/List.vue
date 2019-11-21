@@ -8,6 +8,10 @@
           <font-awesome-icon icon="plus" />
           Add new reference
         </router-link>
+        <button class="btn btn-link" @click="synchronizeList()">
+          <font-awesome-icon icon="sync" />
+          Synchronize
+        </button>
       </div>
       <div class="col-12 col-sm-6 text-right">
         <SwitchSingle
@@ -112,6 +116,9 @@ export default {
     },
     idFromReversedList(index) {
       return this.listLength - 1 - index;
+    },
+    synchronizeList() {
+      this.$store.dispatch('loadFlatsList');
     }
   },
 }
